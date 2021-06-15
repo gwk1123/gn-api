@@ -68,7 +68,7 @@ sxysibe:
     #是否刷新其它站点数据至redis
     refresh-other-site-switch: false
     #刷新其它站点相关列表配置 OTA平台代码-站点代码 如： CTRIP-CT001
-    refresh-ota-sites: QUNAR-SXG,FLIGGY-TBSXYPT,FLIGGY-TBSXYJP,FLIGGY-TBSXYBTPT,FLIGGY-TBSXYBTJP,QUNAR-SBI,CTRIP-CT001,CTRIP-CT003
+    refresh-ota-sites: QUNAR-QNPT,CTRIP-CT001,CTRIP-CT003
 
   #OTA站点相关
   ota:
@@ -83,7 +83,7 @@ sxysibe:
     #        ota: LY
     #        site: LY001
     ota: CTRIP
-    site: CT001
+    site: CT002
     #        ota: FLIGGY
     #        site: TBSXYPT
     #cid 可以理解为：app key 身份识别
@@ -158,7 +158,7 @@ sxysibe:
     invalid-route-survival-time: 168
     aq:
       app-key: test
-      search-url: http://192.168.3.221:9091
+      search-url: http://106.75.115.170:19086
       other-url: http://192.168.3.221:9091
       contact:
         name: A1IncLtd
@@ -168,7 +168,7 @@ sxysibe:
         email: APE-sxycsh@cywz.cn
     cq:
       app-key: test
-      search-url: http://127.0.0.1:8080
+      search-url: http://106.75.115.170:19086
       other-url: http://192.168.3.221:19091
       contact:
         name: HONG KONG NG CHOW INTERNATIONAL TRAVEL LTD - WEBSVC
@@ -178,7 +178,7 @@ sxysibe:
         email: MT.sxycsh@cywz.cn
     nh:
       app-key: test
-      search-url: http://127.0.0.1:8086
+      search-url: http://106.75.115.170:19086
       other-url: http://192.168.3.221:19091
       contact:
         name: HONG KONG NG CHOW INTERNATIONAL TRAVEL LTD - WEBSVC

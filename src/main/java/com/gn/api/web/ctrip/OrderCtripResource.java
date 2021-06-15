@@ -7,16 +7,23 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gn.api.utils.SibeServiceUtil;
 import com.gn.config.SibeProperties;
+import com.gn.ota.ctrip.model.CtripOrderRequest;
+import com.gn.ota.ctrip.model.CtripOrderResponse;
 import com.gn.ota.ctrip.model.CtripVerifyRequest;
 import com.gn.ota.ctrip.model.CtripVerifyResponse;
+import com.gn.ota.ctrip.transform.TransformCtripOrderRequest;
 import com.gn.ota.ctrip.transform.TransformCtripVerifyRequest;
+import com.gn.ota.site.SibeOrderRequest;
 import com.gn.ota.site.SibeVerifyRequest;
 import com.gn.sibe.SibeVerifyService;
+import com.gn.utils.aes.AESOperator;
 import com.gn.utils.constant.SibeConstants;
+import com.gn.utils.exception.CustomSibeEncryptException;
 import com.gn.utils.exception.CustomSibeException;
 import com.gn.utils.logs.LogFileUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +56,8 @@ public class OrderCtripResource {
     private SibeVerifyService sibeVerifyService;
     @Autowired
     private SibeServiceUtil sibeServiceUtil;
+    @Autowired
+    private TransformCtripOrderRequest transformOrderRequest;
 
 
     /**
@@ -104,6 +113,76 @@ public class OrderCtripResource {
         return ResponseEntity.ok()
                 .body(ctripVerifyResponse);
     }
+
+
+
+
+
+    @ApiOperation("生单")
+    @RequestMapping(value = "/order",
+            method = RequestMethod.POST,
+            consumes = MediaType.TEXT_PLAIN_VALUE,
+            produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> order(@RequestBody String orderRequest) throws Exception {
+        //1.解密orderRequest
+        ObjectMapper objectMapper = new ObjectMapper();
+        String sKey =sibeProperties.getOta().getSkey();
+        String decodeOrderRequest = null;
+
+        try {
+            decodeOrderRequest = AESOperator.getInstance().jdk8decrypt(orderRequest, sKey);
+        } catch (Exception e) {
+            throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求参数错误", "000001",sKey,"UnKnow");
+        }
+        if(StringUtils.isEmpty(decodeOrderRequest)){
+            throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求参数错误", "000002",sKey,"UnKnow");
+        }
+
+        //2.LOGGER.志打印
+        // LOGGER.debug("***order请求参数：" + decodeOrderRequest);
+
+        //3.String转为OtaOrderRequestVM
+        CtripOrderRequest ctripOrderRequest=null;
+        try {
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            ctripOrderRequest = objectMapper.readValue(decodeOrderRequest, CtripOrderRequest.class);
+        }catch (JsonParseException e){
+            LOGGER.error("请求无法解析成json格式 JsonMappingException",e);
+            throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求无法解析成json格式 JsonParseException", "00000",sKey,"UnKnow");
+        } catch (JsonMappingException e) {
+            LOGGER.error("请求无法解析成json格式 JsonMappingException",e);
+            throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求无法解析成json格式 JsonMappingException", "00000",sKey,"UnKnow");
+        } catch (IOException e) {
+            LOGGER.error("请求无法解析成json格式 JsonMappingException",e);
+            throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求无法解析成json格式 IOException", "00000",sKey,"UnKnow");
+        }
+
+        //3.OtaVerifyRequestVM转为OtaVerifyRequest对象
+        SibeOrderRequest sibeOrderRequest = (SibeOrderRequest)transformOrderRequest.toOrderRequest(ctripOrderRequest,sibeServiceUtil.getSibeOrderRequest(sibeProperties));
+        LOGGER.info("uuid:"+sibeOrderRequest.getUuid()+" order请求参数：" +decodeOrderRequest);
+        LogFileUtil.saveLogFile(sibeOrderRequest.getUuid(),"orderRequest",objectMapper,ctripOrderRequest);
+
+        CtripOrderResponse ctripOrderResponse = (CtripOrderResponse)sibeOrderService.order(sibeOrderRequest,transformOrderResponse.getToOta());
+
+        LogFileUtil.saveLogFile(sibeOrderRequest.getUuid(),"orderResponse",objectMapper,ctripOrderResponse);
+
+        //加密变成字符串
+        String strOrderResponse= objectMapper.writeValueAsString(ctripOrderResponse);
+        String encryptResult = AESOperator.getInstance().jdk8encrypt(strOrderResponse,sKey);
+
+        Long s =(System.currentTimeMillis()-sibeOrderRequest.getStartTime())/(1000);
+        LOGGER.info("uuid:"+sibeOrderRequest.getUuid() +" order返回消耗:"+ s +"秒");
+
+        //返回密文
+        return ResponseEntity.ok()
+                .body(encryptResult);
+    }
+
+
+
+
 
 
 }
