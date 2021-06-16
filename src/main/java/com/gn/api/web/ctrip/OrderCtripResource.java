@@ -15,6 +15,7 @@ import com.gn.ota.ctrip.transform.TransformCtripOrderRequest;
 import com.gn.ota.ctrip.transform.TransformCtripVerifyRequest;
 import com.gn.ota.site.SibeOrderRequest;
 import com.gn.ota.site.SibeVerifyRequest;
+import com.gn.sibe.SibeOrderService;
 import com.gn.sibe.SibeVerifyService;
 import com.gn.utils.aes.AESOperator;
 import com.gn.utils.constant.SibeConstants;
@@ -54,6 +55,8 @@ public class OrderCtripResource {
     private TransformCtripVerifyRequest transformCtripVerifyRequest;
     @Autowired
     private SibeVerifyService sibeVerifyService;
+    @Autowired
+    private SibeOrderService sibeOrderService;
     @Autowired
     private SibeServiceUtil sibeServiceUtil;
     @Autowired
@@ -164,7 +167,7 @@ public class OrderCtripResource {
         LOGGER.info("uuid:"+sibeOrderRequest.getUuid()+" order请求参数：" +decodeOrderRequest);
         LogFileUtil.saveLogFile(sibeOrderRequest.getUuid(),"orderRequest",objectMapper,ctripOrderRequest);
 
-        CtripOrderResponse ctripOrderResponse = (CtripOrderResponse)sibeOrderService.order(sibeOrderRequest,transformOrderResponse.getToOta());
+        CtripOrderResponse ctripOrderResponse = (CtripOrderResponse)sibeOrderService.order(sibeOrderRequest);
 
         LogFileUtil.saveLogFile(sibeOrderRequest.getUuid(),"orderResponse",objectMapper,ctripOrderResponse);
 
