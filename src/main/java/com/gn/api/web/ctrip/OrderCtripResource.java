@@ -84,12 +84,6 @@ public class OrderCtripResource {
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             ctripVerifyRequest = objectMapper.readValue(verifyRequest, CtripVerifyRequest.class);
-        } catch (JsonParseException e) {
-            LOGGER.error("请求无法解析成json格式 JsonMappingException", e);
-            throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_1, "请求无法解析成json格式 JsonParseException", "00000", "UnKnow");
-        } catch (JsonMappingException e) {
-            LOGGER.error("请求无法解析成json格式 JsonMappingException", e);
-            throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_1, "请求无法解析成json格式 JsonMappingException", "00000", "UnKnow");
         } catch (IOException e) {
             LOGGER.error("请求无法解析成json格式 JsonMappingException", e);
             throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_1, "请求无法解析成json格式 IOException", "00000", "UnKnow");
@@ -151,19 +145,13 @@ public class OrderCtripResource {
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             ctripOrderRequest = objectMapper.readValue(decodeOrderRequest, CtripOrderRequest.class);
-        }catch (JsonParseException e){
-            LOGGER.error("请求无法解析成json格式 JsonMappingException",e);
-            throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求无法解析成json格式 JsonParseException", "00000",sKey,"UnKnow");
-        } catch (JsonMappingException e) {
-            LOGGER.error("请求无法解析成json格式 JsonMappingException",e);
-            throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求无法解析成json格式 JsonMappingException", "00000",sKey,"UnKnow");
-        } catch (IOException e) {
+        }catch (IOException e) {
             LOGGER.error("请求无法解析成json格式 JsonMappingException",e);
             throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求无法解析成json格式 IOException", "00000",sKey,"UnKnow");
         }
 
         //3.OtaVerifyRequestVM转为OtaVerifyRequest对象
-        SibeOrderRequest sibeOrderRequest = (SibeOrderRequest)transformOrderRequest.toOrderRequest(ctripOrderRequest,sibeServiceUtil.getSibeOrderRequest(sibeProperties));
+        SibeOrderRequest sibeOrderRequest = transformOrderRequest.toOrderRequest(ctripOrderRequest,sibeServiceUtil.getSibeOrderRequest(sibeProperties));
         LOGGER.info("uuid:"+sibeOrderRequest.getUuid()+" order请求参数：" +decodeOrderRequest);
         LogFileUtil.saveLogFile(sibeOrderRequest.getUuid(),"orderRequest",objectMapper,ctripOrderRequest);
 
