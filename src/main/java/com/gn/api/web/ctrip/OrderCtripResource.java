@@ -65,16 +65,9 @@ public class OrderCtripResource {
 
     /**
      * Verify response entity.
-     *
-     * @param verifyRequest the verify request
-     * @return the response entity
-     * @throws Exception the exception
      */
     @ApiOperation("验价")
-    @RequestMapping(value = "/verify",
-            method = RequestMethod.POST,
-            consumes = MediaType.TEXT_PLAIN_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/verify")
     public ResponseEntity<CtripVerifyResponse> verify(@RequestBody String verifyRequest) throws Exception {
         //1.String转为OtaVerifyRequestVM
         //ObjectMapper objectMapper = new ObjectMapper();
@@ -116,10 +109,7 @@ public class OrderCtripResource {
 
 
     @ApiOperation("生单")
-    @RequestMapping(value = "/order",
-            method = RequestMethod.POST,
-            consumes = MediaType.TEXT_PLAIN_VALUE,
-            produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value = "/order")
     public ResponseEntity<String> order(@RequestBody String orderRequest) throws Exception {
         //1.解密orderRequest
         ObjectMapper objectMapper = new ObjectMapper();
