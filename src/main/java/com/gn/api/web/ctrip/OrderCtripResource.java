@@ -1,5 +1,6 @@
 package com.gn.api.web.ctrip;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -162,6 +163,14 @@ public class OrderCtripResource {
     }
 
 
+    @ApiOperation("加密")
+    @RequestMapping(value = "/encrypt")
+    public String encrypt(@RequestBody String orderRequest) throws Exception {
+        String sKey =sibeProperties.getOta().getSkey();
+//        CtripOrderRequest decodeOrderRequest = JSON.parseObject(orderRequest,CtripOrderRequest.class);
+        String encryptResult = AESOperator.getInstance().jdk8encrypt(orderRequest,sKey);
+        return encryptResult;
+    }
 
 
 
