@@ -158,8 +158,8 @@ sxysibe:
     invalid-route-survival-time: 168
     aq:
       app-key: test
-      search-url: http://106.75.115.170:19086
-      other-url: http://192.168.3.221:9091
+      search-url: http://106.75.115.170:19088
+      other-url: http://106.75.115.170:19088
       contact:
         name: A1IncLtd
         address: FLAT G, 15/F, KINGLAND APARTMENTS, 739 NATHAN ROAD MONGKOK, KOWLOON, HK
@@ -168,8 +168,8 @@ sxysibe:
         email: APE-sxycsh@cywz.cn
     cq:
       app-key: test
-      search-url: http://106.75.115.170:19086
-      other-url: http://192.168.3.221:19091
+      search-url: http://106.75.115.170:19088
+      other-url: http://106.75.115.170:19088
       contact:
         name: HONG KONG NG CHOW INTERNATIONAL TRAVEL LTD - WEBSVC
         address: FLAT G, 15/F, KINGLAND APARTMENTS, 739 NATHAN ROAD MONGKOK, KOWLOON, HK
@@ -178,8 +178,8 @@ sxysibe:
         email: MT.sxycsh@cywz.cn
     nh:
       app-key: test
-      search-url: http://106.75.115.170:19086
-      other-url: http://192.168.3.221:19091
+      search-url: http://106.75.115.170:19088
+      other-url: http://106.75.115.170:19088
       contact:
         name: HONG KONG NG CHOW INTERNATIONAL TRAVEL LTD - WEBSVC
         address: FLAT G, 15/F, KINGLAND APARTMENTS, 739 NATHAN ROAD MONGKOK, KOWLOON, HK
@@ -188,8 +188,8 @@ sxysibe:
         email: MT.sxycsh@cywz.cn
     kjy:
       app-key: test
-      search-url: http://localhost:19088
-      other-url: http://localhost:19088
+      search-url: http://106.75.115.170:19088
+      other-url: http://106.75.115.170:19088
       contact:
         name: HONG KONG NG CHOW INTERNATIONAL TRAVEL LTD - WEBSVC
         address: FLAT G, 15/F, KINGLAND APARTMENTS, 739 NATHAN ROAD MONGKOK, KOWLOON, HK
