@@ -83,7 +83,7 @@ sxysibe:
     #        ota: LY
     #        site: LY001
     ota: CTRIP
-    site: CT002
+    site: CT001
     #        ota: FLIGGY
     #        site: TBSXYPT
     #cid 可以理解为：app key 身份识别
