@@ -46,7 +46,7 @@ spring:
 
 sxysibe:
   compass:
-    switchgds: false
+    switchgds: true
     compresstype: GZIP
     #  switchgds所有站点统一 开启或关闭 ,切换gds开关是必须情况原来的redis
     #  switchsite  注意B2C 统一站点和OTA 统一站点一致
