@@ -39,7 +39,7 @@ spring:
         min-idle: 50
         # 从连接池中获取连接最大等待时间（默认为-1，单位为毫秒，负数表示无限）
         max-wait: 3000
-        time-out: 10000
+        time-out: 15000
         shutdown-time-out: 5000
 
     redisson: # redisson的配置
