@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="10 seconds">
+
+	<contextName>logback</contextName>
+	<property name="log.path" value="/logs/gn-api/gn-api"/>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+<!--			<pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+			<pattern>%yellow(%d{yyyy-MM-dd HH:mm:ss}) %red([%thread]) %highlight(%-5level) %cyan(%logger{50}) - %magenta(%msg) %n
+			</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+			<!--日志文件保留天数-->
+			<MaxHistory>60</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 控制台输出级别 -->
+	<root level="info">
+		<appender-ref ref="console"/>
+		<appender-ref ref="file"/>
+	</root>
+
+</configuration>
