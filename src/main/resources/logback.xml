@@ -9,7 +9,7 @@
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 <!--			<pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>-->
-			<pattern>%yellow(%d{yyyy-MM-dd HH:mm:ss}) %.([%thread]) %highlight(%-5level) %cyan(%logger{50}) - %(%msg) %n
+			<pattern>%yellow(%d{yyyy-MM-dd HH:mm:ss}) %([%thread]) %highlight(%-5level) %cyan(%logger{50}) - %(%msg) %n
 			</pattern>
 			<charset>UTF-8</charset>
 		</encoder>
