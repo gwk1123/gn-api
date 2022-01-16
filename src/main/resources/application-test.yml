@@ -4,14 +4,14 @@ server:
 eureka:
   client:
     serviceUrl: #注册中心的注册地址
-      defaultZone: http://106.75.115.170:8090/eureka/
+      defaultZone: http://192.168.31.133:8090/eureka/
 
 spring:
   application:
     name: gn-api
 
   datasource:
-    url: jdbc:mysql://106.75.115.170:3306/gn-web?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://192.168.31.132:3306/gn-web?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
     username: root
     password: gwk_632697105qq
     druid:
