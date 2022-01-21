@@ -5,6 +5,9 @@ eureka:
   client:
     serviceUrl: #注册中心的注册地址
       defaultZone: http://106.75.115.170:8090/eureka/
+  instance:
+    #    instance-id: ${spring.application.instance_id:${random.value}}:${spring.application.name}:${server.port}
+    prefer-ip-address: true # 就把ip注册到eureka了，不加的话我看过eureka注册界面，是以docker容器的container id注册过去的
 
 spring:
   application:
