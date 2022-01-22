@@ -11,6 +11,8 @@ eureka:
 spring:
   application:
     name: gn-api
+  main:
+    allow-bean-definition-overriding: true # 意思是后来发现的bean会覆盖之前相同名称的bean
 
   datasource:
     url: jdbc:mysql://106.75.115.170:3306/gn-web?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
