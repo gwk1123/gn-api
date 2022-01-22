@@ -6,7 +6,6 @@ eureka:
     serviceUrl: #注册中心的注册地址
       defaultZone: http://192.168.31.133:8090/eureka/
   instance:
-    #    instance-id: ${spring.application.instance_id:${random.value}}:${spring.application.name}:${server.port}
     prefer-ip-address: true # 就把ip注册到eureka了，不加的话我看过eureka注册界面，是以docker容器的container id注册过去的
 
 spring:
@@ -54,7 +53,7 @@ spring:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
 
 
-sxysibe:
+sibe:
   compass:
     switchgds: true
     compresstype: GZIP
@@ -82,7 +81,7 @@ sxysibe:
 
   #OTA站点相关
   ota:
-    #森鑫源加密datakey ##森鑫源的Data Key
+    #  加密datakey ##  的Data Key
     data-key: 6784397598743236
     #OTA平台
     #站点
@@ -168,8 +167,6 @@ sxysibe:
     invalid-route-survival-time: 168
     aq:
       app-key: test
-      search-url: http://localhost:19088
-      other-url: http://localhost:19088
       contact:
         name: A1IncLtd
         address: FLAT G, 15/F, KINGLAND APARTMENTS, 739 NATHAN ROAD MONGKOK, KOWLOON, HK
@@ -178,8 +175,6 @@ sxysibe:
         email: APE-sxycsh@cywz.cn
     cq:
       app-key: test
-      search-url: http://localhost:19088
-      other-url: http://localhost:19088
       contact:
         name: HONG KONG NG CHOW INTERNATIONAL TRAVEL LTD - WEBSVC
         address: FLAT G, 15/F, KINGLAND APARTMENTS, 739 NATHAN ROAD MONGKOK, KOWLOON, HK
@@ -188,8 +183,6 @@ sxysibe:
         email: MT.sxycsh@cywz.cn
     nh:
       app-key: test
-      search-url: http://localhost:19088
-      other-url: http://localhost:19088
       contact:
         name: HONG KONG NG CHOW INTERNATIONAL TRAVEL LTD - WEBSVC
         address: FLAT G, 15/F, KINGLAND APARTMENTS, 739 NATHAN ROAD MONGKOK, KOWLOON, HK
@@ -198,8 +191,6 @@ sxysibe:
         email: MT.sxycsh@cywz.cn
     kjy:
       app-key: test
-      search-url: http://localhost:19088
-      other-url: http://localhost:19088
       contact:
         name: HONG KONG NG CHOW INTERNATIONAL TRAVEL LTD - WEBSVC
         address: FLAT G, 15/F, KINGLAND APARTMENTS, 739 NATHAN ROAD MONGKOK, KOWLOON, HK
