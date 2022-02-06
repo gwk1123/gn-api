@@ -4,7 +4,7 @@
 <configuration scan="true" scanPeriod="10 seconds">
 
 	<contextName>logback</contextName>
-	<property name="log.path" value="/logs/gn-api/gn-api"/>
+	<property name="log.path" value="/gn/api/logs/gn-api"/>
 
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
