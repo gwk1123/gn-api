@@ -16,6 +16,14 @@ eureka:
   instance:
     prefer-ip-address: true # 就把ip注册到eureka了，是以docker容器的container id注册过去的
 
+feign:  # feign默认的连接时长10s和读取时长60s不生效,重新指定 https://blog.csdn.net/weixin_42241455/article/details/121871337
+  client:
+    config:
+      default:
+        #不设置connectTimeout会导致readTimeout设置不生效
+        connectTimeout: 10000
+        readTimeout: 60000
+
 spring:
   application:
     name: gn-api
