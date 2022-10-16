@@ -18,7 +18,7 @@ import com.gn.ota.site.SibeOrderRequest;
 import com.gn.ota.site.SibeVerifyRequest;
 import com.gn.sibe.SibeOrderService;
 import com.gn.sibe.SibeVerifyService;
-import com.gn.utils.aes.AESOperator;
+import com.gn.utils.aes.AESUtils;
 import com.gn.utils.constant.SibeConstants;
 import com.gn.utils.exception.CustomSibeEncryptException;
 import com.gn.utils.exception.CustomSibeException;
@@ -118,7 +118,7 @@ public class OrderCtripResource {
         String decodeOrderRequest = null;
 
         try {
-            decodeOrderRequest = AESOperator.getInstance().jdk8decrypt(orderRequest, sKey);
+            decodeOrderRequest = AESUtils.getInstance().jdk8decrypt(orderRequest, sKey);
         } catch (Exception e) {
             throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求参数错误", "000001",sKey,"UnKnow");
         }
@@ -152,7 +152,7 @@ public class OrderCtripResource {
 
         //加密变成字符串
         String strOrderResponse= objectMapper.writeValueAsString(ctripOrderResponse);
-        String encryptResult = AESOperator.getInstance().jdk8encrypt(strOrderResponse,sKey);
+        String encryptResult = AESUtils.getInstance().jdk8encrypt(strOrderResponse,sKey);
 
         Long s =(System.currentTimeMillis()-sibeOrderRequest.getStartTime())/(1000);
         LOGGER.info("uuid:"+sibeOrderRequest.getUuid() +" order返回消耗:"+ s +"秒");
@@ -168,7 +168,7 @@ public class OrderCtripResource {
     public String encrypt(@RequestBody String orderRequest) throws Exception {
         String sKey =sibeProperties.getOta().getSkey();
 //        CtripOrderRequest decodeOrderRequest = JSON.parseObject(orderRequest,CtripOrderRequest.class);
-        String encryptResult = AESOperator.getInstance().jdk8encrypt(orderRequest,sKey);
+        String encryptResult = AESUtils.getInstance().jdk8encrypt(orderRequest,sKey);
         return encryptResult;
     }
 
