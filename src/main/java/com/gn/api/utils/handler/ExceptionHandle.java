@@ -28,7 +28,7 @@ public class ExceptionHandle {
             CustomSibeException ex = (CustomSibeException) e;
             return new SibeExceptionResponse(ex.getStatus(),ex.getMsg());
         } else {  //其他异常报对应的信息
-            logger.info("[系统异常]{}", e.getMessage(), e);
+            logger.error("[系统异常]{}", e.getMessage(), e);
             return new SibeExceptionResponse("-1", "fail");
         }
     }

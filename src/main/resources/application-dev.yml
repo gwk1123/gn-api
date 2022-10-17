@@ -110,7 +110,7 @@ sibe:
     #        ota: LY
     #        site: LY001
     ota: CTRIP
-    site: CT001
+    site: XCPT
     #        ota: FLIGGY
     #        site: TBSXYPT
     #cid 可以理解为：app key 身份识别
