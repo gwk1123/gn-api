@@ -32,4 +32,8 @@
 		<appender-ref ref="file"/>
 	</root>
 
+	<logger name="com.gn" level="debug" additivity="false">
+		<appender-ref ref="console" />
+	</logger>
+
 </configuration>
