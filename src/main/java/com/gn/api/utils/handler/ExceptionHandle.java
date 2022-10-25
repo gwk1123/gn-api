@@ -26,6 +26,7 @@ public class ExceptionHandle {
         //自定义异常返回对应编码
         if (e instanceof CustomSibeException) {
             CustomSibeException ex = (CustomSibeException) e;
+            logger.info("自定义信息:{}",ex.getMsg());
             return new SibeExceptionResponse(ex.getStatus(),ex.getMsg());
         } else {  //其他异常报对应的信息
             logger.error("[系统异常]{}", e.getMessage(), e);
