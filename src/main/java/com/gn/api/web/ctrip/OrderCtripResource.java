@@ -16,6 +16,7 @@ import com.gn.ota.ctrip.transform.TransformCtripOrderRequest;
 import com.gn.ota.ctrip.transform.TransformCtripVerifyRequest;
 import com.gn.ota.site.SibeOrderRequest;
 import com.gn.ota.site.SibeVerifyRequest;
+import com.gn.sibe.KProductService;
 import com.gn.sibe.SibeOrderService;
 import com.gn.sibe.SibeVerifyService;
 import com.gn.utils.aes.AESUtils;
@@ -62,6 +63,8 @@ public class OrderCtripResource {
     private SibeServiceUtil sibeServiceUtil;
     @Autowired
     private TransformCtripOrderRequest transformOrderRequest;
+    @Autowired
+    private KProductService kProductService;
 
 
     /**
@@ -89,8 +92,29 @@ public class OrderCtripResource {
 
         LogFileUtil.saveLogFile(sibeVerifyRequest.getUuid(), "verifyRequest", objectMapper, ctripVerifyRequest);
 
-        //不是K位产品，调用正常verify
-        CtripVerifyResponse ctripVerifyResponse = (CtripVerifyResponse) sibeVerifyService.verify(sibeVerifyRequest);
+        CtripVerifyResponse ctripVerifyResponse = null;
+        //判断是否为K位产品，是则调用K位verify，否则调用正常verify
+        String productType = sibeVerifyRequest.getRouting().getSibeRoutingData().getSibePolicy().getProductType();
+        if("2".equals(productType)){
+            boolean permitKProductSign = false;
+            try {
+                permitKProductSign = kProductService.getKSeatSign(sibeVerifyRequest.getSite());
+            } catch (Exception e) {
+                LOGGER.error("uuid:"+sibeVerifyRequest.getUuid()+" Verify K位 获取开关失败");
+                throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_999,
+                        "该产品已经关闭-开关获取失败", sibeVerifyRequest.getUuid(),"verify");
+            }
+
+            if(permitKProductSign){
+                ctripVerifyResponse  = (CtripVerifyResponse) kProductService.verify(sibeVerifyRequest);
+            }else {
+                throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_999,
+                        "该产品已经关闭", sibeVerifyRequest.getUuid(),"verify");
+            }
+        }else {
+            //不是K位产品，调用正常verify
+            ctripVerifyResponse = (CtripVerifyResponse) sibeVerifyService.verify(sibeVerifyRequest);
+        }
 
         LogFileUtil.saveLogFile(sibeVerifyRequest.getUuid(), "verifyResponse", objectMapper, ctripVerifyResponse);
 
