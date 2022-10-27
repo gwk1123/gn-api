@@ -170,7 +170,29 @@ public class OrderCtripResource {
         LOGGER.info("uuid:"+sibeOrderRequest.getUuid()+" order请求参数：" +decodeOrderRequest);
         LogFileUtil.saveLogFile(sibeOrderRequest.getUuid(),"orderRequest",objectMapper,ctripOrderRequest);
 
-        CtripOrderResponse ctripOrderResponse = (CtripOrderResponse)sibeOrderService.order(sibeOrderRequest);
+        CtripOrderResponse ctripOrderResponse = null;
+        //判断是否为K位产品，是则调用K位verify，否则调用正常verify
+        String productType = sibeOrderRequest.getRouting().getSibeRoutingData().getSibePolicy().getProductType();
+        if("2".equals(productType)){
+            boolean permitKProductSign = false;
+            try {
+                permitKProductSign = kProductService.getKSeatSign(sibeOrderRequest.getSite());
+            } catch (Exception e) {
+                LOGGER.error("uuid:"+sibeOrderRequest.getUuid()+" Verify K位 获取开关失败");
+                throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_999,
+                        "该产品已经关闭-开关获取失败", sibeOrderRequest.getUuid(),"verify");
+            }
+
+            if(permitKProductSign){
+                ctripOrderResponse  = (CtripOrderResponse) kProductService.order(sibeOrderRequest);
+            }else {
+                throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_999,
+                        "该产品已经关闭", sibeOrderRequest.getUuid(),"verify");
+            }
+        }else {
+            //不是K位产品，调用正常verify
+            ctripOrderResponse = (CtripOrderResponse) sibeOrderService.order(sibeOrderRequest);
+        }
 
         LogFileUtil.saveLogFile(sibeOrderRequest.getUuid(),"orderResponse",objectMapper,ctripOrderResponse);
 
