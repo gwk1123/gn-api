@@ -2,6 +2,7 @@ package com.gn.api.utils;
 
 import com.gn.config.SibeProperties;
 import com.gn.ota.site.SibeOrderRequest;
+import com.gn.ota.site.SibePayRequest;
 import com.gn.ota.site.SibeVerifyRequest;
 import org.springframework.stereotype.Component;
 
@@ -18,5 +19,11 @@ public class SibeServiceUtil {
         SibeOrderRequest sibeOrderRequest = new SibeOrderRequest();
         sibeOrderRequest.setSibeProperties(sibeProperties);
         return sibeOrderRequest;
+    }
+
+    public SibePayRequest getSibePayRequest(SibeProperties sibeProperties) {
+        SibePayRequest sibePayRequest = new SibePayRequest();
+        sibePayRequest.setSibeProperties(sibeProperties);
+        return sibePayRequest;
     }
 }
