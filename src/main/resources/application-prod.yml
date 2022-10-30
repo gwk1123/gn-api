@@ -103,22 +103,12 @@ sibe:
     data-key: 6784397598743236
     #OTA平台
     #站点
-    #        ota: MAFENGWO
-    #        site: MFW001
-    #    ota: OWT
-    #    site: OWT001
-    #        ota: LY
-    #        site: LY001
     ota: CTRIP
     site: CT001
-    #        ota: FLIGGY
-    #        site: TBSXYPT
     #cid 可以理解为：app key 身份识别
     cid: 6e2b04bf29644892
     #密钥 生单、支付校验接口传输数据须做 AES 加密后进行 BASE64 转码,密钥满足 128 位
     skey: 8784337598743272
-    #bj6va5it1xc9ha1r
-    #8784337598743272
     #日志
     logger-path: /var/log/sibe
     #日志文件是否保存本地
@@ -126,54 +116,10 @@ sibe:
     #1.没有匹配上政策，或者没有政策录入其他说明， 则返回此信息 Rule Element 其他说明： 注意@@仅仅是区分 直接政策投放，还是手功政策投放
     other-issue-ticket-msg: 只提供国际报销凭证（香港INVOICE）,所有退票改期必须提前48小时申请，否则视为误机,误机后不得退票。退改业务请在工作时间（周一至周五09:00~17:30）联系我们。友情提示：机票须按航班起飞时间顺序使用，否则无法登机。本公司只是机票代理，签证问题请自行确认，保证24小时以内出票。@@
     #other-issue-ticket-msg: 机票说明：1:下单后请及时付款，以免座位被取消；2:机票须按航班起飞时间顺序使用，否则无法登机；3：签证问题请自行确认；4：请务必认真核实姓名，避免填错给您带来的经济损失.@@
-    #是否在校验价格和生单失败后，推送新鲜的搜索数据到飞猪平台，目前只推送到FLIGGY-TBSXYPT站点
-    push-fliggy: false
-    push-fliggy-url: http://192.168.3.49:8080
-    #航司自动上下线，分组统计时间：统计当前时间减去offline-group-statistics-time这个时间段里面的生单，价格校验成功率，单位分钟。
-    #如果配置-1,表示：统计当天00：00分-当前时间，这个时间段生单，价格校验成功率。
-    offline-group-statistics-time: -1
-    assignCabin:
-      NH: K
-      #JL: O
-      #UA: N
-      AA: O
-      DL: E
-      VA: M
-      CX: Q
-      AC: K
-      QF: E
-      PR: O
-      B6: P
-      EK: X
-      KC: E
-      MH: G
-      FJ: E
-      GA: S
-      AY: O
-      LH: K
-      SK: N
-      WS: H
-      HU: O
-
     #数据接收方OTA平台站点的缓存时间，单位秒
     ota-site-cache-time: 600
-    #飞猪退改调整
-    fliggy-non-air-line: SL/WE/TG/PG/JQ/3K/LQ/NH/JL/QV/UO/OS/LX/OD/SN/VK/V7/XW/OK/TX/WM/ZE/FY/CY/IG/AD/BL/GK/DV/LJ/EW/ZE/7C/TW/SV/JJ/MR/MK/MD/PX/US/HY/TU/J2/WB/MS/B2/OB/TM/CM/5J/P9/HF/O6/H2/KU/W3/SA/S3/TU/XL/US/PB/PY/PD/PC/4M/7N/BO/IE/KK/O6/4B/VX/SZ/S3/BP/DT/UU/PZ/SZ/AD/EQ/SW/HM/DT/Z2/AD/AR/9B/GF/Z8/W3/SW/WS/TW/OU/SY/FN/OA/PY/PC/BO/IZ/KK/TA/TB/TU/XL/ZJ/XR/XF/PX/PW/CG/BP/UP/H1/TP/SU/FZ/XW/NZ/ZI/GQ/HZ/QS/AW/DV/MW/JU/JQ/AI/WZ/S7/U6/NS/WW/GF/KU/RC/3S/3K/JQ/BL/SN/IB/AZ/VY/SE/J9/OM/TR/Y7/S7/LX/IG/KL/3K/BG/TV/ZL/UK/TP/SB/AI/KP/BE/FA/NP/S4/W2/YE/CO/5H/TW/NP/RO/VS/RA/K6/EW/ZE/UB/HA/KF/EI/SN/YK/MS/FI/MN/UM/NX/W2/ME/"NF/FI/ID/IB/B5/LO/LX/WF/D8/9K/TS/ZI/V7/DE/DY/8Q/YM/LG/EN/VJ/IG/WG/EL/VK/KM/MT/KL/2J/XQ/AZ/TL/BT/0B/XY/G3/A3/LN/L6/SP/VL/AH/UT/CY/PW/FB/A5/A9/3M/ZE/VW/PU/UX/RQ/BW/NU/W4/BM/VJ/M9/CU/BE/NY/D8/BF/DY/DN/TN/SS/NT/D2/UG/LQ/TP/EW/JP/BA/8U/AM/WM/ST/5T/TX/5F/Z8/7I/MW/KF/BB/9V/TP/9U/OR/P0/JU/PS/QC/BJ/DI/AR/LH/TK/8M/QD/MI/B6/9W/SQ
-    fliggy-fare-type: PRV
-    fliggy-takeoff-time: 48
-    fliggy-refund: 0.7
-    fliggy-endorse: 0.8
     #共享航班生单延迟响应结果时间：ms
     order-delayed-time: 5000
-    #验价成功率小于等于80% 过滤 剩余舱位 1 的方案
-    filter-success-cabin: 80-1
-    #马蜂窝极速开关
-    mfwjs-switch: true
-    #马蜂窝极速
-    mfwjs-other-url: hornet002.uatcywz.cn
-    ctrip-non-airline-endorse: NH/JL
-    ctrip-refund: 0.68
-    ctrip-endorse: 0.68
 
 
   #GDS相关
