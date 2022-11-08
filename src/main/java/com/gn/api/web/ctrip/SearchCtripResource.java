@@ -55,7 +55,6 @@ public class SearchCtripResource {
         Long s = (SystemClock.now() - sibeSearchRequest.getStartTime()) / (1000);
         logger.info("uuid:" + sibeSearchRequest.getUuid() + " search返回消耗:" + s + "秒");
         return objectMapper.writeValueAsString(ctripSearchResponse);
-
     }
 
 

@@ -90,9 +90,7 @@ public class OrderCtripResource {
         }
         SibeVerifyRequest sibeVerifyRequest = (SibeVerifyRequest) transformCtripVerifyRequest.toVerifyRequest(ctripVerifyRequest, sibeServiceUtil.getSibeVerifyRequest(sibeProperties));
 
-
         LOGGER.info("uuid:" + sibeVerifyRequest.getUuid() + " verify请求参数：" + verifyRequest);
-
         LogFileUtil.saveLogFile(sibeVerifyRequest.getUuid(), "verifyRequest", objectMapper, ctripVerifyRequest);
 
         CtripVerifyResponse ctripVerifyResponse = null;
@@ -250,14 +248,11 @@ public class OrderCtripResource {
             throw new CustomSibeEncryptException(SibeConstants.RESPONSE_STATUS_1,  "请求无法解析成json格式 IOException", "00000",sKey,"UnKnow");
         }
 
-
         //Transform
         SibePayRequest sibePayRequest = (SibePayRequest)transformCtripPayRequest.toPayRequest(ctripPayRequest,sibeServiceUtil.getSibePayRequest(sibeProperties));
-
         LOGGER.info("uuid:"+sibePayRequest.getUuid()+" pay请求参数：" +decodePayRequest);
         //保存日志文件
         LogFileUtil.saveLogFile(sibePayRequest.getUuid(),"payRequest",objectMapper,ctripPayRequest);
-
         CtripPayResponse ctripPayResponse=null;
         String productType = sibePayRequest.getRouting().getSibeRoutingData().getSibePolicy().getProductType();
         if("2".equals(productType)){
@@ -269,26 +264,21 @@ public class OrderCtripResource {
                 throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_999,
                         "该产品已经关闭-开关获取失败", sibePayRequest.getUuid(),"pay");
             }
-
             if(permitKProductSign){
                 ctripPayResponse  = (CtripPayResponse) kProductService.pay(sibePayRequest);
             }else {
-                throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_999,
-                        "该产品已经关闭", sibePayRequest.getUuid(),"pay");
+                throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_999, "该产品已经关闭", sibePayRequest.getUuid(),"pay");
             }
         }else {
             //发起pay核心请求
             ctripPayResponse = (CtripPayResponse) sibePayService.pay(sibePayRequest);
         }
-
         //保存日志文件
         LogFileUtil.saveLogFile(sibePayRequest.getUuid(),"payResponse",objectMapper,ctripPayResponse);
-
         //转字符并加密
         String strPayResponse= objectMapper.writeValueAsString(ctripPayResponse);
         String encryptResult = AESUtils.getInstance().jdk8encrypt(strPayResponse,sKey);
-        return ResponseEntity.ok()
-                .body(encryptResult) ;
+        return ResponseEntity.ok().body(encryptResult);
     }
 
 
