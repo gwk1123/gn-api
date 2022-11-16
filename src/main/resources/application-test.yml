@@ -12,9 +12,15 @@ server:
 eureka:
   client:
     serviceUrl: #注册中心的注册地址
-      defaultZone: http://192.168.31.133:8090/eureka/
+      defaultZone: http://192.168.1.103:8090/eureka/
+    registry-fetch-interval-seconds: 5 #指示从eureka获取注册表信息的频率(以秒为单位)
+    register-with-eureka: true
+    fetch-registry: true
   instance:
+    #    instance-id: ${spring.application.instance_id:${random.value}}:${spring.application.name}:${server.port}
     prefer-ip-address: true # 就把ip注册到eureka了，不加的话我看过eureka注册界面，是以docker容器的container id注册过去的
+    lease-renewal-interval-in-seconds: 3 #表示eureka客户端发送心跳的频率(以秒为单位)
+    lease-expiration-duration-in-seconds: 5  # 过期时间，默认90s, 可不配置
 
 feign:  # feign默认的连接时长10s和读取时长60s不生效,重新指定 https://blog.csdn.net/weixin_42241455/article/details/121871337
   client:
