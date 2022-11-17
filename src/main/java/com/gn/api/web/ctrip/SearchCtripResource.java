@@ -45,7 +45,7 @@ public class SearchCtripResource {
         OtaSite otaSite = sibeSearchCommService.findSiteCodeByOta(otaSiteCode.toUpperCase());
         if (Objects.isNull(otaSite)) {
             logger.error("没有找到对应的站点,{}", otaSiteCode);
-            throw new CustomSibeException(SibeConstants.RESPONSE_MSG_114, "请求没有找到对应的站点", "00000", "search");
+            throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_114, "请求没有找到对应的站点", "00000", "search");
         }
         try {
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);

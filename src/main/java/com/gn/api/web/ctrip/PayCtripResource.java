@@ -63,7 +63,7 @@ public class PayCtripResource {
         OtaSite otaSite = sibeSearchCommService.findSiteCodeByOta(otaSiteCode.toUpperCase());
         if (Objects.isNull(otaSite)) {
             LOGGER.error("没有找到对应的站点,{}", otaSiteCode);
-            throw new CustomSibeException(SibeConstants.RESPONSE_MSG_114, "请求没有找到对应的站点", "00000", "search");
+            throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_114, "请求没有找到对应的站点", "00000", "search");
         }
 
         String sKey = sibeProperties.getOta().getSkey();
