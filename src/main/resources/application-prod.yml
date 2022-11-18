@@ -109,7 +109,7 @@ sibe:
     #密钥 生单、支付校验接口传输数据须做 AES 加密后进行 BASE64 转码,密钥满足 128 位
     skey: 8784337598743272
     #日志
-    logger-path: /var/log/sibe
+    logger-path: /log/sibe
     #日志文件是否保存本地
     logger-save-file-flag: true
     #1.没有匹配上政策，或者没有政策录入其他说明， 则返回此信息 Rule Element 其他说明： 注意@@仅仅是区分 直接政策投放，还是手功政策投放
