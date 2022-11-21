@@ -35,7 +35,7 @@ import java.util.Objects;
  * The type Order resource.
  */
 @RestController
-@RequestMapping("/verify")
+@RequestMapping("/ctrip")
 @Api(description = "携程机票直连API生单")
 public class VerifyCtripResource {
 
@@ -59,7 +59,7 @@ public class VerifyCtripResource {
      * Verify response entity.
      */
     @ApiOperation("验价")
-    @RequestMapping(value = "/{otaSiteCode}")
+    @RequestMapping(value = "/verify/{otaSiteCode}")
     public ResponseEntity<CtripVerifyResponse> verify(@RequestBody String verifyRequest, @PathVariable String otaSiteCode) {
 
         OtaSite otaSite = sibeSearchCommService.findSiteCodeByOta(otaSiteCode.toUpperCase());

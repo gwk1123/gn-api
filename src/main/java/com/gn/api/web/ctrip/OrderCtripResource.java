@@ -38,7 +38,7 @@ import java.util.Objects;
  * The type Order resource.
  */
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/ctrip")
 @Api(description = "携程机票直连API生单")
 public class OrderCtripResource {
 
@@ -58,7 +58,7 @@ public class OrderCtripResource {
 
 
     @ApiOperation("生单")
-    @RequestMapping(value = "/{otaSiteCode}")
+    @RequestMapping(value = "/order/{otaSiteCode}")
     public ResponseEntity<String> order(@RequestBody String orderRequest, @PathVariable String otaSiteCode) throws Exception {
 
         OtaSite otaSite = sibeSearchCommService.findSiteCodeByOta(otaSiteCode.toUpperCase());

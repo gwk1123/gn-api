@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Objects;
 
 @Controller
-@RequestMapping(value = "/search")
+@RequestMapping(value = "/ctrip")
 public class SearchCtripResource {
 
     private Logger logger = LoggerFactory.getLogger(SearchCtripResource.class);
@@ -38,7 +38,7 @@ public class SearchCtripResource {
     private SibeSearchCommService sibeSearchCommService;
 
     @ResponseBody
-    @RequestMapping(value = "/{otaSiteCode}")
+    @RequestMapping(value = "/search/{otaSiteCode}")
     public String searchCtrip(@RequestBody String request, @PathVariable String otaSiteCode) throws Exception {
         CtripSearchRequest ctripSearchRequest = null;
 

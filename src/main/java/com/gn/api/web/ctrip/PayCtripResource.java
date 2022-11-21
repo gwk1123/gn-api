@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/pay")
+@RequestMapping("/ctrip")
 public class PayCtripResource {
 
     private Logger LOGGER = LoggerFactory.getLogger(OrderCtripResource.class);
@@ -54,7 +54,7 @@ public class PayCtripResource {
 
 
     @ApiOperation("付款校验")
-    @RequestMapping(value = "/{otaSiteCode}",
+    @RequestMapping(value = "/pay/{otaSiteCode}",
             method = RequestMethod.POST,
             consumes = MediaType.TEXT_PLAIN_VALUE,
             produces = MediaType.TEXT_PLAIN_VALUE)

@@ -123,7 +123,7 @@ sibe:
   #GDS相关
   gds:
     fuse-time: 20
-    #        缓存无效航线（无价格的航线，无效的航线）的失效时间（单位：时）
+    # 缓存无效航线（无价格的航线，无效的航线）的失效时间（单位：时）
     #并发幂等性控制
     search-idempotent: true
     invalid-route-survival-time: 168
