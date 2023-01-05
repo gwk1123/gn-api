@@ -10,6 +10,7 @@ import com.gn.ota.ctrip.model.CtripOrderResponse;
 import com.gn.ota.ctrip.transform.TransformCtripOrderRequest;
 import com.gn.ota.site.SibeOrderRequest;
 import com.gn.repository.entity.OtaSite;
+import com.gn.service.transform.TransformByOta;
 import com.gn.sibe.KProductService;
 import com.gn.sibe.SibeOrderService;
 import com.gn.sibe.SibeSearchCommService;
@@ -69,7 +70,7 @@ public class OrderCtripResource {
 
         //1.解密orderRequest
         ObjectMapper objectMapper = new ObjectMapper();
-        String sKey = sibeProperties.getOta().getSkey();
+        String sKey = TransformByOta.getSkey(otaSite.getOtaCode(),sibeProperties);
         String decodeOrderRequest = null;
 
         try {
@@ -141,9 +142,14 @@ public class OrderCtripResource {
 
 
     @ApiOperation("加密")
-    @RequestMapping(value = "/encrypt")
-    public String encrypt(@RequestBody String orderRequest) throws Exception {
-        String sKey = sibeProperties.getOta().getSkey();
+    @RequestMapping(value = "/encrypt/{otaSiteCode}")
+    public String encrypt(@RequestBody String orderRequest, @PathVariable String otaSiteCode) throws Exception {
+        OtaSite otaSite = sibeSearchCommService.findSiteCodeByOta(otaSiteCode.toUpperCase());
+        if (Objects.isNull(otaSite)) {
+            LOGGER.error("没有找到对应的站点,{}", otaSiteCode);
+            throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_114, "请求没有找到对应的站点", "00000", "search");
+        }
+        String sKey = TransformByOta.getSkey(otaSite.getOtaCode(),sibeProperties);
 //        CtripOrderRequest decodeOrderRequest = JSON.parseObject(orderRequest,CtripOrderRequest.class);
         String encryptResult = AESUtils.getInstance().jdk8encrypt(orderRequest, sKey);
         return encryptResult;

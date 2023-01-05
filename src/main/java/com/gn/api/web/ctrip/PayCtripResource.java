@@ -12,6 +12,7 @@ import com.gn.ota.ctrip.model.CtripPayResponse;
 import com.gn.ota.ctrip.transform.TransformCtripPayRequest;
 import com.gn.ota.site.SibePayRequest;
 import com.gn.repository.entity.OtaSite;
+import com.gn.service.transform.TransformByOta;
 import com.gn.sibe.KProductService;
 import com.gn.sibe.SibePayService;
 import com.gn.sibe.SibeSearchCommService;
@@ -66,7 +67,7 @@ public class PayCtripResource {
             throw new CustomSibeException(SibeConstants.RESPONSE_STATUS_114, "请求没有找到对应的站点", "00000", "search");
         }
 
-        String sKey = sibeProperties.getOta().getSkey();
+        String sKey = TransformByOta.getSkey(otaSite.getOtaCode(),sibeProperties);
         String decodePayRequest = null;
         try {
             decodePayRequest = AESUtils.jdk8decrypt(payRequest, sKey);
