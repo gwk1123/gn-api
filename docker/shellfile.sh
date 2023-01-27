@@ -1,10 +1,10 @@
 
 #!/bin/sh
 web_path=/jar/gn-api #定义 tomcat 的位置
-startup_path=/root/.jenkins/workspace/gn-api/docker/startup.sh
-shutdown_path=/root/.jenkins/workspace/gn-api/docker/shutdown.sh
-docker_path=/root/.jenkins/workspace/gn-api/docker/Dockerfile
-project_web=/root/.jenkins/workspace/gn-api/target/gn-api-0.0.1-SNAPSHOT.jar #定义项目打包位置
+startup_path=/jenkins/workspace/gn-api/docker/startup.sh
+shutdown_path=/jenkins/workspace/gn-api/docker/shutdown.sh
+docker_path=/jenkins/workspace/gn-api/docker/Dockerfile
+project_web=/jenkins/workspace/gn-api/target/gn-api-0.0.1-SNAPSHOT.jar #定义项目打包位置
 if [ -f $project_web ] ;then
 echo -- stop tomcat
 #kill tomcat pid
