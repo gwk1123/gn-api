@@ -26,13 +26,13 @@
 		</encoder>
 	</appender>
 
-	<!-- 控制台输出级别 -->
-	<root level="info">
-		<appender-ref ref="console"/>
+	<!-- 文件输出级别 -->
+	<root name="com.gn" level="info" additivity="true">
 		<appender-ref ref="file"/>
 	</root>
 
-	<logger name="com.gn" level="debug" additivity="false">
+	<!-- 控制台输出级别 -->
+	<logger name="com.gn" level="debug" additivity="true">
 		<appender-ref ref="console" />
 	</logger>
 
