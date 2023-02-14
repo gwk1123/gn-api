@@ -16,14 +16,9 @@
 	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${log.path}</file>
 
-		<!-- 果日志级别等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志。 -->
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<!-- 设置过滤级别 -->
+		<!--此filter过滤info级别以下的日志-->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>INFO</level>
-			<!-- 用于配置符合过滤条件的操作-->
-			<onMatch>ACCEPT</onMatch>
-			<!-- 用于配置不符合过滤条件的操作 -->
-			<onMismatch>DENY</onMismatch>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
