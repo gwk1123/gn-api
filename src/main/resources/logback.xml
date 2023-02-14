@@ -15,6 +15,16 @@
 
 	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${log.path}</file>
+
+		<!-- 果日志级别等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志。 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!-- 设置过滤级别 -->
+			<level>INFO</level>
+			<!-- 用于配置符合过滤条件的操作-->
+			<onMatch>ACCEPT</onMatch>
+			<!-- 用于配置不符合过滤条件的操作 -->
+			<onMismatch>DENY</onMismatch>
+		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
 			<!--日志文件保留天数-->
@@ -27,18 +37,8 @@
 	</appender>
 
 
-	<!-- 控制台输出级别 -->
-	<root name="com.gn" level="info">
+	<logger name="com.gn" level="debug">
 		<appender-ref ref="console"/>
-		<appender-ref ref="file"/>
-	</root>
-
-	<!--todo debug等级控制台没有打印 两个logger会相互覆盖-->
-	<logger name="com.gn" level="debug" additivity="false">
-		<appender-ref ref="console" />
-	</logger>
-
-	<logger name="com.gn" level="info" additivity="false">
 		<appender-ref ref="file"/>
 	</logger>
 
