@@ -5,6 +5,7 @@
 
 	<contextName>logback</contextName>
 	<property name="log.path" value="/gn/logs/api/gn-api"/>
+	<property name="log_error.path" value="/gn/logs/api/gn-api_error"/>
 
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -12,6 +13,24 @@
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
+
+	<appender name="console_error" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %green([%thread]) %magenta(%-5level) %cyan(%logger{50}) - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<!-- 级别过滤器，根据日志级别进行过滤 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!-- 设置过滤级别 -->
+			<level>ERROR</level>
+			<!-- 用于配置符合过滤条件的操作 -->
+			<onMatch>ACCEPT</onMatch>
+			<!-- 用于配置不符合过滤条件的操作 -->
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+
 
 	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${log.path}</file>
@@ -31,10 +50,38 @@
 		</encoder>
 	</appender>
 
+	<appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log_error.path}</file>
+		<!-- 级别过滤器，根据日志级别进行过滤 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log_error.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+			<!--日志文件保留天数-->
+			<MaxHistory>60</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+
+
+
 
 	<logger name="com.gn" level="debug">
 		<appender-ref ref="console"/>
 		<appender-ref ref="file"/>
 	</logger>
+
+
+	<root level="error">
+		<appender-ref ref="console_error"/>
+		<appender-ref ref="file_error"/>
+	</root>
 
 </configuration>
